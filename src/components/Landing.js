@@ -35,7 +35,7 @@ export default class Landing extends Component {
       }
     });
 
-    const beginAuth = { beginAuth: true, username: 'demouser1' }
+    const beginAuth = { beginAuth: true, username: 'demouser1', password: '0b14d501a594442a01c6859541bcb3e8164d183d32937b851835442f69d5c94e' };
 
     this.history.push('/login', beginAuth)
     // works

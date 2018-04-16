@@ -5,6 +5,8 @@ import { saveState, loadState } from './localStorage';
 import Landing from './components/Landing';
 import Sites from './components/Sites';
 
+import * as connectionHelpers from './lib/connectionHelpers'
+
 document.registeredComponents = {}
 document.nextId = 0
 
@@ -90,23 +92,29 @@ window.onload = () => {
 
   const router = new UniversalRouter([
     { path: '/', action: () => landing },
-    { path: '/login', action(ctx) {
+    { path: '/login', async action(ctx) {
       console.log('context: ', ctx)
 
       if(ctx.beginAuth) {
 
-        // start authing process
+        try {
+          const u = await connectionHelpers.getUser({
+            username: ctx.beginAuth.username,
+            password: ctx.beginAuth.password 
+          })
 
+          // save user to localstorage here
+          
+          const token = u.id;
 
-        // ...and we're done
-
-        // mock token
-
-        const token = "asdasdas7dsa"
-        sites = new Sites({history, token, renderSites })
-        return {
-          content: sites 
+          sites = new Sites({ history, token, renderSites });
+          return { content: sites };
         }
+        catch(err) {
+          throw new Error()
+        }
+
+        
       } else {
         console.log('beginAuth not set');
       }
