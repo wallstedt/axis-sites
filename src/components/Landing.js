@@ -76,26 +76,11 @@ export default class Landing extends Component {
         }
       })
 
-      console.log(u);
+     
       this.history.push('/', { authed: true, token: u.data.token, username: u.data.username })
-      /* sites = new Sites({ history, token, renderSites });
-      return { content: sites }; */
     } catch (err) {
       localStorage.setItem('loggedIn', 'error');
-      this.render()
       this.history.push('/', { authed: false })
     }
-
-
-
-   // localStorage.setItem('loggedIn', 'error')
-
-    // const beginAuth = { beginAuth: true, username: 'demouser1', password: '0b14d501a594442a01c6859541bcb3e8164d183d32937b851835442f69d5c94e' };
-
-    // TESTING CHANGES
-    // this.history.push('/login', beginAuth)
-    // this.history.push('/', beginAuth);
-    // works
-    //this.history.push('/login', { auth: true });
   }
 } // end Landing
