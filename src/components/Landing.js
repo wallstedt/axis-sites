@@ -46,6 +46,9 @@ export default class Landing extends Component {
   }
 
   setBody(newBody) {
+
+      let username = document.querySelector('[name="username"]').value;
+      let password = document.querySelector('[name="password"]').value; 
     // save state, then push
     // TODO: double check necessity of this 
     saveState({
