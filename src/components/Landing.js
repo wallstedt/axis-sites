@@ -42,18 +42,9 @@ export default class Landing extends Component {
 
   async setBody(newBody) {
 
-      let username = document.querySelector('[name="username"]').value;
-      let password = document.querySelector('[name="password"]').value; 
-    // save state, then push
-    // TODO: double check necessity of this 
-   /*  saveState({
-      auth: {
-        // get these from the request
-        id: '1',
-        username: 'demouser1',
-        token: 'madeup'
-      }
-    }); */
+    let username = document.querySelector('[name="username"]').value;
+    let password = document.querySelector('[name="password"]').value; 
+
 
 
     try {
@@ -82,12 +73,11 @@ export default class Landing extends Component {
           id: u.data.userid, 
           username: u.data.username, 
           token: u.data.token,
-          memaids: 'none'
         }
       })
 
       console.log(u);
-      this.history.push('/', { authed: true, token: u.data.token })
+      this.history.push('/', { authed: true, token: u.data.token, username: u.data.username })
       /* sites = new Sites({ history, token, renderSites });
       return { content: sites }; */
     } catch (err) {

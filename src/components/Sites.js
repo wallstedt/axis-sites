@@ -7,6 +7,9 @@ import * as connectionHelpers from '../lib/connectionHelpers'
 export default class Sites extends Component {
   constructor(props) {
     super()
+
+    console.log(props)
+
     this.history = props.history;
     this.username = props.username
     this.token = props.token;
@@ -68,7 +71,7 @@ export default class Sites extends Component {
   }
 
   async render() {
-    const sites = await this.getSites('demouser1', this.token).then(sites => {
+    const sites = await this.getSites(this.username, this.token).then(sites => {
       return Promise.all(sites.map(site => site.render()));
     })
 

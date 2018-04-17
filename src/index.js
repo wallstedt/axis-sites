@@ -27,13 +27,13 @@ const app = () => {
       path: '/',
       async action(ctx) {
         console.log('context: ', ctx);
-
+        console.log('state', state);
         if (!ctx.auth) {
           return { content: landing };
         }
         if (ctx.auth.authed) {
           const token = ctx.auth.token;
-          sites = new Sites({ history, token, renderSites });
+          sites = new Sites({ history, username: ctx.auth.username, token: ctx.auth.token, renderSites });
           return { content: sites };
         } /* else if (ctx.beginAuth) {
           try {
