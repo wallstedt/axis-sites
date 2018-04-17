@@ -5,7 +5,23 @@ export default class Landing extends Component {
   constructor(history) {
     super();
     this.history = history;
+
+    this.state = {
+      loggedIn: ''
+    }
+
+    const ls = localStorage.getItem('loggedIn')
+    this.state.loggedIn = ls
   }
+
+  loginError(){
+    return (this.state.loggedIn === 'error') ? `
+    <div>
+      <p>Log in failed</p>
+    </div>
+    ` : ``
+  }
+
   render() {
     return `
     <div>
@@ -18,7 +34,7 @@ export default class Landing extends Component {
       <p>In addition, upon loading the app, localstorage state will be loaded, and injected (NOT IMPOTANT, BUT NICE)</p>
       <button onclick="document.registeredComponents[${
         this._id
-      }].setBody(this.value)">Klick</button>      
+      }].setBody(this.value)">Klick</button>${this.loginError()}      
     </div>
     `;
   }
@@ -34,6 +50,9 @@ export default class Landing extends Component {
         token: 'madeup'
       }
     });
+
+
+    localStorage.setItem('loggedIn', 'error')
 
     const beginAuth = { beginAuth: true, username: 'demouser1', password: '0b14d501a594442a01c6859541bcb3e8164d183d32937b851835442f69d5c94e' };
 
