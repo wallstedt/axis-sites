@@ -1,6 +1,7 @@
 import Component from './component'
 import { saveState, loadState } from '../localStorage';
-
+import * as connectionHelpers from '../lib/connectionHelpers';
+import '../style/style.css'
 export default class Landing extends Component {
   constructor(history) {
     super();
@@ -24,14 +25,8 @@ export default class Landing extends Component {
 
   render() {
     return `
-    <div>
-      <p>The user logs in by pressing the button</p>
-      <p>The button below symbolizes the complete logging in process and will be replaced by:</p>
-      <ul>
-        <li>A form</li>
-        <li>setBody() will be replaced by a function consuming utility functions for logging in</li>
-      </ul>
-      <p>In addition, upon loading the app, localstorage state will be loaded, and injected (NOT IMPOTANT, BUT NICE)</p>
+    <div id="flexContainer">
+      <h1>Login</h1>
       <form id="loginform">
         Username:<br>
         <input type="text" name="username" value="">
@@ -45,7 +40,7 @@ export default class Landing extends Component {
     `;
   }
 
-  setBody(newBody) {
+  async setBody(newBody) {
 
       let username = document.querySelector('[name="username"]').value;
       let password = document.querySelector('[name="password"]').value; 
@@ -61,13 +56,43 @@ export default class Landing extends Component {
     });
 
 
-    localStorage.setItem('loggedIn', 'error')
+    try {
+      const u = await connectionHelpers.getUser({
+        username: 'demouser1',
+        password: '0b14d501a594442a01c6859541bcb3e8164d183d32937b851835442f69d5c94e'
+      });
+      localStorage.setItem('loggedIn', '');
+    
+      // save user to localstorage here
 
-    const beginAuth = { beginAuth: true, username: 'demouser1', password: '0b14d501a594442a01c6859541bcb3e8164d183d32937b851835442f69d5c94e' };
+      const token = u.data.userid;
+
+      saveState({
+        auth: {
+          id: u.data.userid, 
+          username: u.data.username, 
+          token: 'secret'
+        }
+      })
+
+      console.log(u);
+      this.history.push('/', { authed: true, token })
+      /* sites = new Sites({ history, token, renderSites });
+      return { content: sites }; */
+    } catch (err) {
+      localStorage.setItem('loggedIn', 'error');
+      this.history.push('/', { authed: false })
+    }
+
+
+
+   // localStorage.setItem('loggedIn', 'error')
+
+    // const beginAuth = { beginAuth: true, username: 'demouser1', password: '0b14d501a594442a01c6859541bcb3e8164d183d32937b851835442f69d5c94e' };
 
     // TESTING CHANGES
     // this.history.push('/login', beginAuth)
-    this.history.push('/', beginAuth);
+    // this.history.push('/', beginAuth);
     // works
     //this.history.push('/login', { auth: true });
   }

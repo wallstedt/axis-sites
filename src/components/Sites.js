@@ -92,7 +92,7 @@ export default class Sites extends Component {
 
 
     return `
-    <div>
+    <div id="flexContainer">
     <h1 onclick="document.registeredComponents[${this._id}].showMe()">The user is logged in.</h1>
       <a id="logout" href="/logout" onclick="document.registeredComponents[${this._id}].logout()">Logout</a>
       <div id="sites-container">

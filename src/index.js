@@ -10,7 +10,8 @@ import * as connectionHelpers from './lib/connectionHelpers'
 document.registeredComponents = {}
 document.nextId = 0
 
-window.onload = () => {
+
+const app = () => {
   const history = createHistory();
 
   const landing = new Landing(history);
@@ -19,16 +20,22 @@ window.onload = () => {
 
   const state = loadState();
 
+  console.log(state);
   const router = new UniversalRouter([
     /* { path: '/', action: () => landing }, */
     {
       path: '/',
       async action(ctx) {
         console.log('context: ', ctx);
-        if (ctx.authed) {
+
+        if (!ctx.auth) {
+          return { content: landing };
+        }
+        if (ctx.auth.authed) {
+          const token = ctx.auth.token;
           sites = new Sites({ history, token, renderSites });
           return { content: sites };
-        } else if (ctx.beginAuth) {
+        } /* else if (ctx.beginAuth) {
           try {
             const u = await connectionHelpers.getUser({
               username: ctx.beginAuth.username,
@@ -44,43 +51,16 @@ window.onload = () => {
           } catch (err) {
             throw new Error();
           }
-        } else {
+        }  */ else {
           return { content: landing };
         }
       }
     }
-    /* { path: '/login', async action(ctx) {
-      console.log('context: ', ctx)
-
-      if(ctx.beginAuth) {
-
-        try {
-          const u = await connectionHelpers.getUser({
-            username: ctx.beginAuth.username,
-            password: ctx.beginAuth.password 
-          })
-
-          // save user to localstorage here
-          
-          const token = u.id;
-
-          sites = new Sites({ history, token, renderSites });
-          return { content: sites };
-        }
-        catch(err) {
-          throw new Error()
-        }
-
-        
-      } else {
-        console.log('beginAuth not set');
-      }
-
-      return {
-        content: login
-      }
-    }} */
   ]);
+
+  /**
+   *  Used by the router object to render views by resolving path and context arguments
+   */
 
   async function render(location) {
     let page = await router.resolve({
@@ -88,7 +68,6 @@ window.onload = () => {
       auth: location.state,
       beginAuth: location.state
     });
-    console.log(page);
 
     if (page.content) {
       page = page.content;
@@ -108,7 +87,7 @@ window.onload = () => {
   // first render
   render(history.location);
 
-  // listen for changes
+  // listen for changes to navigate user
   history.listen((location, action) => {
     render(location);
   });
@@ -118,7 +97,11 @@ window.onload = () => {
       event.preventDefault();
     }
   });
-};
+}
+
+window.onload= () => {
+  app()
+}
 
 
 

@@ -69,7 +69,6 @@ export default class Site extends Component {
         </thead>
         ${devices.join('')}
       </table>
-      <p>hoho </p>
     </div>
     `;
 

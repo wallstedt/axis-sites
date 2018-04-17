@@ -50,23 +50,4 @@ export default class Device extends Component {
     const txt = this.storages.map(store => `id: ${store.id}, state: ${store.state}`)
     return txt.join('')
   }
-
-  /*   setBody(value) {
-      const html = `
-      <tr>
-
-        <td>${this.id}</td>
-        <td>${this.siteId}</td>
-        <td>${this.title}</td>
-        <td>${this.description}</td>
-        <td>${this.model}</td>
-        <td>${this.version}</td>
-        <td>${this.enabled}</td>
-        <td>${this.connected}</td>
-        <td>${this.timezone}</td>
-      </tr>
-      `;
-
-      this.onPress(html);
-    } */
-  }
+}
