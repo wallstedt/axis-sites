@@ -32,9 +32,15 @@ export default class Landing extends Component {
         <li>setBody() will be replaced by a function consuming utility functions for logging in</li>
       </ul>
       <p>In addition, upon loading the app, localstorage state will be loaded, and injected (NOT IMPOTANT, BUT NICE)</p>
-      <button onclick="document.registeredComponents[${
-        this._id
-      }].setBody(this.value)">Klick</button>${this.loginError()}      
+      <form id="loginform">
+        Username:<br>
+        <input type="text" name="username" value="">
+        <br>
+        Password:<br>
+        <input type="password" name="password" value="">
+        <br><br>
+      </form> 
+      <button onclick="document.registeredComponents[${this._id}].setBody(this.value)">Klick</button>${this.loginError()}      
     </div>
     `;
   }
