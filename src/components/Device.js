@@ -46,7 +46,6 @@ export default class Device extends Component {
    * expands 'storage' objects 
    */
   printStorage() {
-    console.log(this.storages);
     const txt = this.storages.map(store => `id: ${store.id}, state: ${store.state}`)
     return txt.join('')
   }
