@@ -133,15 +133,15 @@ window.onload = () => {
       page = page.content 
     }
 
-    document.querySelector('body').innerHTML = page.render()
+    document.querySelector('body').innerHTML = await page.render()
   }
 
   /**
    * a cb sent to a component to trigger a rerender
    * @param {*} page - page component
    */
-  function renderSites(page){
-    document.querySelector('body').innerHTML = page.render();
+  async function renderSites(page){
+    document.querySelector('body').innerHTML = await page.render();
   }
 
   // first render

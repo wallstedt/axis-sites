@@ -52,10 +52,7 @@ server.get('/api/users', (req, res) =>{
   console.log('in api');
   res.sendStatus(204)
 })
-server.get('/login', (req, res) => {
-  console.log('redirerct?');
-  res.redirect(200, '/')
-})
+
 function isAuthed(username, password) {
   // if user exist filter him out. Then return the id, then join to string
   const authed = users.filter(user => {
