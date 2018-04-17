@@ -3,7 +3,7 @@ import Component from './component';
 export default class Device extends Component {
   constructor(id, siteId, title, description, model, version, enabled, connected, timezone, storages, onPress) {
     super();
-    
+
     this.id = id;
     this.siteId = siteId;
     this.title = title;
@@ -31,7 +31,7 @@ export default class Device extends Component {
         <td>${this.enabled}</td>
         <td>${this.connected}</td>
         <td>${this.timezone}</td>
-        <td onclick="document.registeredComponents[${this._id}].expand(this.storages)">
+        <td>
         ${this.printStorage()}
         </td>
       </tr>
@@ -45,14 +45,6 @@ export default class Device extends Component {
     const txt = this.storages.map(store => `id: ${store.id}, state: ${store.state}`)
     return txt.join('')
   }
-
-  async render2() {
-    return `
-      <div id="bla">
-        <p id="${this.id}" onclick="document.registeredComponents[${this._id}].setBody(this.value)">${this.title}</p>
-      </div>
-      `;
-    }
 
     setBody(value) {
       const html = `
