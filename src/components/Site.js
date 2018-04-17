@@ -18,9 +18,9 @@ export default class Site extends Component {
   async render() {
     return `
     <div id="site-header">
-      <p id="${this.id}" onclick="document.registeredComponents[${
+      ${this.name} <a href="#" id="${this.id}" onclick="document.registeredComponents[${
       this._id
-    }].showDevices()">${this.name}</p>
+    }].showDevices()">view details...</a>
     </div>
     `;
   }
@@ -60,9 +60,8 @@ export default class Site extends Component {
     const devices = await Promise.all(this.devices[0].map(d => d.render()))
     
     const html = `
-    <div>
-      <h1>${this.name}</h1>
-      <p>${this.id}</p>
+    <div id="tableContainer">
+      <h1>${this.name} details</h1>
       <table>
         <thead>
           ${headers}

@@ -17,10 +17,22 @@ div {
 }
 #sites-container {
   display: flex;
-  max-width: 100%;
+  align-items: center;
+  justify-content: center;
+  flex-flow: column;
+  width: 100%;
+}
+#table-container {
+  flex: 0 1 auto;
+  padding: 1rem;
+  margin: 1rem;
+}
+#site-header {
+  flex: 0 1 auto;
+  padding: 4px; 
 }
 table {
-  width: 75%;
+
   border-collapse: collapse;
   background-color: rgb(249, 250, 251);
 }

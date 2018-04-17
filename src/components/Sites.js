@@ -8,28 +8,10 @@ export default class Sites extends Component {
   constructor(props) {
     super()
     this.history = props.history;
+    this.username = props.username
     this.token = props.token;
     this.activeSite = '';
     this.renderSites = props.renderSites 
-
-/*     
-
-    // mock data
-    this.mockSites = [
-      { id: 1, title: 'Demo site 1', owner: 'demouser1' },
-      { id: 2, title: 'Demo site 2', owner: 'demouser1' },
-      { id: 3, title: 'Demo site 3', owner: 'demouser2' }
-    ];
-
-    this.sites = this.mockSites.map(site => new Site(site.title, site.id, (value) => {this.setActiveSite(value)})) */
-
-
-    /* this.siteList = this.getSites("demouser1", this.token).then(sites => sites.map(site => new Site(site.title, site.id, (value) => {this.setActiveSite(value)})))
-
-
-    console.log(this.siteList) */
-
-    /* this.getDevices("1", this.token) */
   }
 
   async getSites(username, token){
@@ -106,8 +88,8 @@ export default class Sites extends Component {
 
   logout() {
     // remove the session
-    window.localStorage.clear();
-
+    //window.localStorage.clear();
+    localStorage.removeItem('state')
     // send the user to the rootpath
     this.history.replace('/');
   }

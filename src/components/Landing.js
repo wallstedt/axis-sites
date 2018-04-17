@@ -46,41 +46,53 @@ export default class Landing extends Component {
       let password = document.querySelector('[name="password"]').value; 
     // save state, then push
     // TODO: double check necessity of this 
-    saveState({
+   /*  saveState({
       auth: {
         // get these from the request
         id: '1',
         username: 'demouser1',
         token: 'madeup'
       }
-    });
+    }); */
 
 
     try {
-      const u = await connectionHelpers.getUser({
+      /* const user = await connectionHelpers.getUser({
         username: 'demouser1',
         password: '0b14d501a594442a01c6859541bcb3e8164d183d32937b851835442f69d5c94e'
+      }); */
+
+      console.log(username, password);
+
+      const u = await connectionHelpers.getUser({
+        username: username,
+        password: password
       });
+
       localStorage.setItem('loggedIn', '');
     
       // save user to localstorage here
 
-      const token = u.data.userid;
+      // const token = u.data.userid;
+
+      console.log(u);
 
       saveState({
         auth: {
           id: u.data.userid, 
           username: u.data.username, 
-          token: 'secret'
+          token: u.data.token,
+          memaids: 'none'
         }
       })
 
       console.log(u);
-      this.history.push('/', { authed: true, token })
+      this.history.push('/', { authed: true, token: u.data.token })
       /* sites = new Sites({ history, token, renderSites });
       return { content: sites }; */
     } catch (err) {
       localStorage.setItem('loggedIn', 'error');
+      this.render()
       this.history.push('/', { authed: false })
     }
 

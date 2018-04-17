@@ -36,10 +36,10 @@ server.post('/login', (req, res, next) => {
   console.log(req.body)
   const { username, password } = req.body
   const authed = isAuthed(username, password)
-
+  const token = "very fake"
   if (authed.length) {
     const userid = authed
-    return res.status(200).json({username, userid}) 
+    return res.status(200).json({username, userid, token: token}) 
   }
 
   res.sendStatus(401)
