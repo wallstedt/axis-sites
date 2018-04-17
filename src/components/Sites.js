@@ -8,8 +8,6 @@ export default class Sites extends Component {
   constructor(props) {
     super()
 
-    console.log(props)
-
     this.history = props.history;
     this.username = props.username
     this.token = props.token;
@@ -17,18 +15,23 @@ export default class Sites extends Component {
     this.renderSites = props.renderSites 
   }
 
+  /**
+   * creates a list of sites populated by the devices beloning to that site
+   * @param {*} username 
+   * @param {*} token 
+   * @return - promise 
+   */
   async getSites(username, token){
     const sites = await connectionHelpers.getSites({username, token})
 
     const deviceList = {};
-    // recator to own func (buildSitesList)
+    
     const devices = await Promise.all(sites.map( async site => {
       
       const device = await connectionHelpers.getDevices({siteId: site.id, token})
       
-      
+      // iterate the lite of devices and add devices to the correct site
       deviceList[site.id] = []
-
       const sitesDevices = device.map(d => {
 
         console.log(d.storages)
@@ -49,32 +52,34 @@ export default class Sites extends Component {
         );
       })
       deviceList[site.id].push(sitesDevices)
-      //return sitesDevices
     }))
 
-    // console.log(devices);
-    console.log(deviceList);
+    // iterate the array of sites and create an array of Site objects, each Site containing the 
+    // devices for that site. 
     const siteComponents = sites.map(site => new Site(site.title, site.id, deviceList[site.id], (value) => {this.setActiveSite(value)}))
 
-    console.log('site Components ', siteComponents);
     return siteComponents 
   }
 
+  // get devices belonging to a site 
   async getDevices(siteId, token) {
     const devices = await connectionHelpers.getDevices({siteId, token})
     console.log(devices)
   }
 
+  // render the currently selected site view
   setActiveSite(site){
     this.activeSite = site
     this.renderSites(this)
   }
 
+  // render the view
   async render() {
+
+    // create a list of sites 
     const sites = await this.getSites(this.username, this.token).then(sites => {
       return Promise.all(sites.map(site => site.render()));
     })
-
 
     return `
     <div id="flexContainer">
@@ -89,9 +94,9 @@ export default class Sites extends Component {
     `;
   }
 
+  // logout the user
   logout() {
     // remove the session
-    //window.localStorage.clear();
     localStorage.removeItem('state')
     // send the user to the rootpath
     this.history.replace('/');

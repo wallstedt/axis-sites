@@ -7,6 +7,7 @@ import Sites from './components/Sites';
 
 import * as connectionHelpers from './lib/connectionHelpers'
 
+// Components are registered in order to keep track of even handlers  
 document.registeredComponents = {}
 document.nextId = 0
 
@@ -15,43 +16,25 @@ const app = () => {
   const history = createHistory();
 
   const landing = new Landing(history);
-  /* const login = new Login(history); */
   let sites = null;
 
+  // TODO: safe remove
   const state = loadState();
 
-  console.log(state);
+  // creates a router object, which handles the routing between the two views  
   const router = new UniversalRouter([
-    /* { path: '/', action: () => landing }, */
     {
       path: '/',
       async action(ctx) {
-        console.log('context: ', ctx);
-        console.log('state', state);
         if (!ctx.auth) {
           return { content: landing };
         }
+  
         if (ctx.auth.authed) {
           const token = ctx.auth.token;
           sites = new Sites({ history, username: ctx.auth.username, token: ctx.auth.token, renderSites });
           return { content: sites };
-        } /* else if (ctx.beginAuth) {
-          try {
-            const u = await connectionHelpers.getUser({
-              username: ctx.beginAuth.username,
-              password: ctx.beginAuth.password
-            });
-
-            // save user to localstorage here
-
-            const token = u.id;
-
-            sites = new Sites({ history, token, renderSites });
-            return { content: sites };
-          } catch (err) {
-            throw new Error();
-          }
-        }  */ else {
+        } else {
           return { content: landing };
         }
       }
@@ -61,7 +44,6 @@ const app = () => {
   /**
    *  Used by the router object to render views by resolving path and context arguments
    */
-
   async function render(location) {
     let page = await router.resolve({
       pathname: location.pathname,
