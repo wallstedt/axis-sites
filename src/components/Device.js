@@ -17,8 +17,10 @@ export default class Device extends Component {
     this.onPress = onPress;
   }
 
+  /**
+   * Renders HTML
+   */
   async render () {
-    console.log(this.storages);
     const html = `
       <tr>
 
@@ -40,13 +42,16 @@ export default class Device extends Component {
       return html
   }
 
+  /**
+   * expands 'storage' objects 
+   */
   printStorage() {
     console.log(this.storages);
     const txt = this.storages.map(store => `id: ${store.id}, state: ${store.state}`)
     return txt.join('')
   }
 
-    setBody(value) {
+  /*   setBody(value) {
       const html = `
       <tr>
 
@@ -63,5 +68,5 @@ export default class Device extends Component {
       `;
 
       this.onPress(html);
-    }
+    } */
   }

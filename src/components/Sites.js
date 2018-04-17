@@ -12,7 +12,7 @@ export default class Sites extends Component {
     this.activeSite = '';
     this.renderSites = props.renderSites 
 
-    
+/*     
 
     // mock data
     this.mockSites = [
@@ -21,7 +21,7 @@ export default class Sites extends Component {
       { id: 3, title: 'Demo site 3', owner: 'demouser2' }
     ];
 
-    this.sites = this.mockSites.map(site => new Site(site.title, site.id, (value) => {this.setActiveSite(value)}))
+    this.sites = this.mockSites.map(site => new Site(site.title, site.id, (value) => {this.setActiveSite(value)})) */
 
 
     /* this.siteList = this.getSites("demouser1", this.token).then(sites => sites.map(site => new Site(site.title, site.id, (value) => {this.setActiveSite(value)})))
@@ -29,7 +29,7 @@ export default class Sites extends Component {
 
     console.log(this.siteList) */
 
-    this.getDevices("1", this.token)
+    /* this.getDevices("1", this.token) */
   }
 
   async getSites(username, token){
@@ -90,40 +90,16 @@ export default class Sites extends Component {
       return Promise.all(sites.map(site => site.render()));
     })
 
-    /* const s = await sites.map(async site => await site.render())
-    const t = sites.map(async site => await site.render());
-    const u = sites.map(site => site.render())
-    const u1 = Promise.all(sites.map(async site => await site.render()))
-    const v = await Promise.all(sites.map(async site => await site.render()))
-    const w = await Promise.all(sites.map(site => site.render()))
-    const x = w.map(elem => {
-      console.log(Array.isArray(elem))
-      console.log(typeof elem);
-      return elem
-    })
-
-    console.log(typeof u1)
-    u1.then(resp => console.log(resp));
-    console.log(s);
-    console.log(t);
-    console.log(u);
-    console.log(u1)
-    console.log(v);
-    console.log(w);
-    console.log(x);
-
-    console.log(typeof x);
-    console.log(Array.isArray(x));
-
-    console.log(w.join('')) */
 
     return `
     <div>
     <h1 onclick="document.registeredComponents[${this._id}].showMe()">The user is logged in.</h1>
       <a id="logout" href="/logout" onclick="document.registeredComponents[${this._id}].logout()">Logout</a>
+      <div id="sites-container">
       ${sites.join('')}
       
       ${this.activeSite}
+      </div>
     </div>
     `;
   }
@@ -136,14 +112,3 @@ export default class Sites extends Component {
     this.history.replace('/');
   }
 }
-/* 
-${this.getSites('demouser1', this.token).then(sites =>
-        sites.map(
-          site =>
-            new Site(site.title, site.id, value => {
-              this.setActiveSite(value);
-            })
-        )
-        .map(s => s.render()).join('')
-      )}
-      ${this.sites.map(site => site.render()).join('')} */

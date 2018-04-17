@@ -12,9 +12,12 @@ export default class Site extends Component {
     console.log(this.devices);
   }
 
+  /**
+   * Renders container for 'expandable' link to site details 
+   */
   async render() {
     return `
-    <div id="bla">
+    <div id="site-header">
       <p id="${this.id}" onclick="document.registeredComponents[${
       this._id
     }].showDevices()">${this.name}</p>
