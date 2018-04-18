@@ -1,0 +1,64 @@
+body {
+  background-color: rgb(249, 250, 251);
+  font-family: 'Roboto', sans-serif;
+}
+
+div {
+  background-color: rgb(229, 239, 245);
+}
+
+.page {
+  width: 75%;
+  flex-flow: row nowrap;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.header {
+  padding-right: 4rem;
+}
+#sites-container, container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: column;
+  width: 100%;
+}
+#form, .overlay, .header {
+  display: flex;
+  flex: 0 1 auto;
+}
+.hidden {
+  visibility: hidden;
+}
+#table-container {
+  flex: 0 1 auto;
+  padding: 1rem;
+  margin: 1rem;
+}
+#site-links {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  align-items: center;
+}
+#site-links > a {
+  padding: 2rem;
+}
+#site-header {
+  flex: 0 1 auto;
+  padding: 4px;
+}
+
+table {
+  border-collapse: collapse;
+  background-color: rgb(249, 250, 251);
+}
+
+td,
+th {
+  border: 1px solid #aaa;
+  padding: 0.5rem;
+  text-align: left;
+}
